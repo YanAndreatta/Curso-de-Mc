@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.yan.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -28,6 +29,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -38,12 +40,12 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfouCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.cpfOuCnpj = cpfouCnpj;
+		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = tipo.getCod();
 	}
 
@@ -55,6 +57,13 @@ public class Cliente implements Serializable {
 		this.id = id;
 	}
 
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
+	}
+	
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -71,13 +80,6 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpfouCnpj() {
-		return cpfOuCnpj;
-	}
-
-	public void setCpfouCnpj(String cpfouCnpj) {
-		this.cpfOuCnpj = cpfouCnpj;
-	}
 
 	public TipoCliente getTipo() {
 		return TipoCliente.toEnum(tipo);
@@ -127,7 +129,4 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
 }
